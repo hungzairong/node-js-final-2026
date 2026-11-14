@@ -20,7 +20,7 @@
 3. 在此專案根目錄的終端機輸入：`docker compose up -d`，首次啟動要 build 前端，所以會需要多一些時間（約 2～5 分鐘），完成後會啟動三個服務，分別對應下面三個網址：
    - `http://localhost:3000`：健身房前端頁，**初始每一頁會報 API 錯誤**，這些還不能正常運作的頁面與功能，就是你的待辦清單
    - `http://localhost:8081`：Swagger API 文件。**這是作業唯一的 API 規格來源**，每個 endpoint 點進去都能看到完整的 request／response 範例與錯誤訊息
-   - `localhost:5432`：PostgreSQL 資料庫（**目前是空的**），裡頭的資料表要從你的後端建立
+   - `localhost:5435`：PostgreSQL 資料庫（**目前是空的**），裡頭的資料表要從你的後端建立
 
 （在 Docker Desktop 也會看到 `frontend`(3000)、`swagger`(8081)、`postgres`(5432) 成功啟動）
 

@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: 健身房課程 API 範例
+  version: 1.0.0
+
+paths:
+  # --------------------------------------------------
+  # 範例 1：GET /courses（示範 Query 參數）
+  # --------------------------------------------------
+  /courses:
+    get:
+      summary: 取得課程列表
+      parameters: # 👈 這裡用 parameters
+        - name: level
+          in: query # 代表這個參數會接在網址後面：/courses?level=advanced
+          required: false
+          schema: 
+            type: string
+
+  # --------------------------------------------------
+  # 範例 2：GET /courses/{courseId}（示範 Path 與 Header 參數）
+  # --------------------------------------------------
+  /courses/{courseId}:
+    get:
+      summary: 取得單一課程詳情
+      parameters: # 👈 Path 和 Header 都集中在 parameters 底下標示
+        - name: courseId
+          in: path # 挖洞填在網址路徑中：/courses/5
+          required: true
+          schema:
+            type: integer
+        - name: Accept-Language
+          in: header # 放在 HTTP 請求標頭送出（暗號/設定）
+          required: false
+          schema:
+            type: string
+
+  # --------------------------------------------------
+  # 範例 3：POST /enrollments（示範 Request Body）
+  # --------------------------------------------------
+  /enrollments:
+    post:
+      summary: 報名課程
+      # ⚠️ 注意：這裡完全不用寫 parameters！因為傳 JSON 必須獨立開一個區塊：
+      requestBody: # 👈 OpenAPI 3.0 把 JSON 內容獨立成區塊
+        required: true
+        content:
+          application/json: # 告訴前端資料格式是 JSON
+            schema:
+              type: object
+              required:
+                - courseId # 設定 JSON 裡面的 courseId 是必填
+              properties:  
+                courseId:
+                  type: integer
+                note:
+                  type: string
