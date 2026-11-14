@@ -2,10 +2,12 @@ const { dataSource } = require('../db/data-source')
 const { sendSuccess, sendFailed } = require('../utils/response')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { jwtSecret, jwtExpiresDay } = require('../config/secret')
+const { get } = require('../config')
 
 const PASSWORD_MESSAGE = '密碼不符合規則，需要包含英文數字大小寫，最短8個字，最長16個字'
 
+const jwtSecret = get('secret.jwtSecret')
+const jwtExpiresDay = get('secret.jwtExpiresDay')
 function userRepo() {
   return dataSource.getRepository('User')
 }

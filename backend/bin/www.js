@@ -1,6 +1,7 @@
 const app = require('../app')
 const { dataSource } = require('../db/data-source')
-const { port } = require('../config/web')
+const { get } = require('../config')
+const port = get('web.port')
 
 async function start() {
   try {

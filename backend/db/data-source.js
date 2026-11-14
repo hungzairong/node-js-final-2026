@@ -2,17 +2,17 @@ require('dotenv').config()
 const { DataSource } = require('typeorm')
 const Skill = require('../entities/Skill')
 const CreditPackage = require('../entities/CreditPackage')
+const { get } = require('../config')
 
-const dbConfig = require('../config/db')
 const dataSource = new DataSource({
   type: 'postgres',
-  host: dbConfig.host,
-  port: Number(dbConfig.port),
-  username: dbConfig.username,
-  password: dbConfig.password,
-  database: dbConfig.database,
-  synchronize: dbConfig.synchronize,
-  ssl: dbConfig.ssl,
+  host: get('db.host'),
+  port: Number(get('db.port')),
+  username: get('db.username'),
+  password: get('db.password'),
+  database: get('db.database'),
+  synchronize: get('db.synchronize'),
+  ssl: get('db.ssl'),
   entities: [
     // 今天的 entities 會一個一個長出來
     Skill,
