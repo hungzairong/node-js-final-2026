@@ -2,22 +2,21 @@ require('dotenv').config()
 const { DataSource } = require('typeorm')
 const Skill = require('../entities/Skill')
 const CreditPackage = require('../entities/CreditPackage')
-const User = require('../entities/User')
 
+const dbConfig = require('../config/db')
 const dataSource = new DataSource({
   type: 'postgres',
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  synchronize: process.env.DB_SYNCHRONIZE === 'true',
-  ssl: process.env.DB_ENABLE_SSL === 'true',
+  host: dbConfig.host,
+  port: Number(dbConfig.port),
+  username: dbConfig.username,
+  password: dbConfig.password,
+  database: dbConfig.database,
+  synchronize: dbConfig.synchronize,
+  ssl: dbConfig.ssl,
   entities: [
     // 今天的 entities 會一個一個長出來
     Skill,
     CreditPackage,
-    User,
   ],
   migrations: ['db/migrations/*.js'], // 遷移檔案的存放位置
 
