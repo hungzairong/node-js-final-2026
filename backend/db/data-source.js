@@ -2,6 +2,7 @@ require('dotenv').config()
 const { DataSource } = require('typeorm')
 const Skill = require('../entities/Skill')
 const CreditPackage = require('../entities/CreditPackage')
+const User = require('../entities/User')
 const { get } = require('../config')
 
 const dataSource = new DataSource({
@@ -17,6 +18,7 @@ const dataSource = new DataSource({
     // 今天的 entities 會一個一個長出來
     Skill,
     CreditPackage,
+    User,
   ],
   migrations: ['db/migrations/*.js'], // 遷移檔案的存放位置
 
