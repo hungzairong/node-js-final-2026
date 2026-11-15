@@ -2,8 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const skillRoutes = require('./routes/skill')
 const creditPackageRoutes = require('./routes/creditPackage')
-const authRoutes = require('./routes/auth')
-const adminCoachRoutes = require('./routes/adminCoach')
+const userRoutes = require('./routes/user')
+const adminRoutes = require('./routes/admin')
 const app = express()
 
 app.use(cors())          // W3：前端在 3000、我們在 8080，沒它前端全被擋
@@ -16,8 +16,8 @@ app.get('/healthcheck', (req, res) => {
 
 app.use('/api/coaches/skill', skillRoutes)
 app.use('/api/credit-package', creditPackageRoutes)
-app.use('/api/users', authRoutes)
-app.use('/api/admin/coaches', adminCoachRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/admin/coaches', adminRoutes)
 
 // 404（W3）
 app.use((req, res) => {

@@ -64,7 +64,7 @@ function coachProfile(coach, skillIds) {
   };
 }
 
-const coachesController = {
+const adminController = {
   // 把會員升級成教練。這支不用登入，userId 來自網址
   async upgradeToCoach(req, res, next) {
     const { userId } = req.params;
@@ -286,4 +286,4 @@ const coachesController = {
   },
 };
 
-module.exports = coachesController;
+module.exports = adminController;
