@@ -50,7 +50,9 @@ const signup = async (req, res) => {
   }
 
   const repo = userRepo()
-  const existingUser = await repo.findOne({ where: { email } })
+  // const existingUser = await repo.findOne({ where: { email } })
+  const existingUser = await repo.findOneBy({ email: email.toLowerCase().trim() })
+
   if (existingUser) {
     return sendFailed(res, 409, 'Email 已被使用')
   }

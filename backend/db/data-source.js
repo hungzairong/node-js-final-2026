@@ -3,6 +3,9 @@ const { DataSource } = require('typeorm')
 const Skill = require('../entities/Skill')
 const CreditPackage = require('../entities/CreditPackage')
 const User = require('../entities/User')
+const Coaches = require('../entities/Coaches')
+const CoachSkill = require('../entities/CoachSkill')
+const Course = require('../entities/Course')
 const { get } = require('../config')
 
 const dataSource = new DataSource({
@@ -19,6 +22,9 @@ const dataSource = new DataSource({
     Skill,
     CreditPackage,
     User,
+    Coaches,
+    CoachSkill,
+    Course,
   ],
   migrations: ['db/migrations/*.js'], // 遷移檔案的存放位置
 

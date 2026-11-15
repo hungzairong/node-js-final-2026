@@ -3,6 +3,7 @@ const cors = require('cors')
 const skillRoutes = require('./routes/skill')
 const creditPackageRoutes = require('./routes/creditPackage')
 const authRoutes = require('./routes/auth')
+const adminCoachRoutes = require('./routes/adminCoach')
 const app = express()
 
 app.use(cors())          // W3：前端在 3000、我們在 8080，沒它前端全被擋
@@ -16,6 +17,7 @@ app.get('/healthcheck', (req, res) => {
 app.use('/api/coaches/skill', skillRoutes)
 app.use('/api/credit-package', creditPackageRoutes)
 app.use('/api/users', authRoutes)
+app.use('/api/admin/coaches', adminCoachRoutes)
 
 // 404（W3）
 app.use((req, res) => {
@@ -25,7 +27,9 @@ app.use((req, res) => {
 // 錯誤處理守門員（W4：四個參數）
 app.use((err, req, res, next) => {
   console.error(err)
-  res.status(500).json({ status: 'failed', message: '伺服器錯誤' })
+  const status = err.status || 500
+  const message = status === 500 ? '伺服器錯誤' : err.message
+  res.status(status).json({ status: 'failed', message })
 })
 
 module.exports = app

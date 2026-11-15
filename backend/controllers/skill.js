@@ -27,9 +27,29 @@ const createSkill = async (req, res) => {
 // 更新技能
 const updateSkill = async (req, res) => {
   const { id } = req.params
-  const { name } = req.body
-  const skill = await skillRepo().update(id, { name })
-  return sendSuccess(res, skill)
+  if (!isUuid(id)) {
+    return sendFailed(res, 400, 'ID錯誤')
+  }
+
+  const name = typeof req.body?.name === 'string' ? req.body.name.trim() : ''
+  if (!name) {
+    return sendFailed(res, 400, '欄位未填寫正確')
+  }
+
+  const repo = skillRepo()
+  const skill = await repo.findOne({ where: { id } })
+  if (!skill) {
+    return sendFailed(res, 400, 'ID錯誤')
+  }
+
+  const duplicate = await repo.findOne({ where: { name } })
+  if (duplicate && duplicate.id !== id) {
+    return sendFailed(res, 409, '資料重複')
+  }
+
+  skill.name = name
+  const saved = await repo.save(skill)
+  return sendSuccess(res, saved)
 }
 
 // 刪除技能
@@ -49,7 +69,10 @@ const deleteSkill = async (req, res) => {
 
 // 取得所有技能
 const getSkills = async (req, res) => {
-  const skills = await skillRepo().find()
+  const skills = await skillRepo().find({
+    select: { id: true, name: true },
+    order: { created_at: 'ASC' }
+  })
   return sendSuccess(res, skills)
 }
 

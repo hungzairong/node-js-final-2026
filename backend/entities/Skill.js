@@ -13,7 +13,7 @@ module.exports = new EntitySchema({
         id: {
             type: 'uuid',
             primary: true,
-            generated: 'uuid',
+            generated: 'uuid', //不需要自己生成id，由typeorm生成
             },
         name: {
             type: 'varchar',
