@@ -92,13 +92,9 @@ const login = async (req, res) => {
   }, 201)
 }
 
-// 取得個人資料
+// 取得個人資料。isAuth 已經把會員放在 req.user
 const getProfile = async (req, res) => {
-  const user = await userRepo().findOne({ where: { id: req.user.id } })
-  if (!user) {
-    return sendFailed(res, 401, '無效的 token')
-  }
-  return sendSuccess(res, { user: { name: user.name, email: user.email } })
+  return sendSuccess(res, { user: { name: req.user.name, email: req.user.email } })
 }
 
 // 更新個人資料
@@ -108,17 +104,13 @@ const updateProfile = async (req, res) => {
     return sendFailed(res, 400, '欄位未填寫正確')
   }
 
-  const user = await userRepo().findOne({ where: { id: req.user.id } })
-  if (!user) {
-    return sendFailed(res, 401, '無效的 token')
-  }
-  if (user.name === name) {
+  if (req.user.name === name) {
     return sendFailed(res, 400, '使用者名稱未變更')
   }
 
-  user.name = name
-  await userRepo().save(user)
-  return sendSuccess(res, { user: { name: user.name } })
+  req.user.name = name
+  await userRepo().save(req.user)
+  return sendSuccess(res, { user: { name: req.user.name } })
 }
 
 // 更新密碼
@@ -140,17 +132,13 @@ const updatePassword = async (req, res) => {
     return sendFailed(res, 400, '新密碼與驗證新密碼不一致')
   }
 
-  const user = await userRepo().findOne({ where: { id: req.user.id } })
-  if (!user) {
-    return sendFailed(res, 401, '無效的 token')
-  }
-  const passwordOk = await bcrypt.compare(password, user.password)
+  const passwordOk = await bcrypt.compare(password, req.user.password)
   if (!passwordOk) {
     return sendFailed(res, 400, '密碼輸入錯誤')
   }
 
-  user.password = await bcrypt.hash(newPassword, 10)
-  await userRepo().save(user)
+  req.user.password = await bcrypt.hash(newPassword, 10)
+  await userRepo().save(req.user)
   return sendSuccess(res, null)
 }
 
