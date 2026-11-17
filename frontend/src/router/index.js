@@ -128,7 +128,7 @@ router.beforeEach(async (to, _from, next) => {
       next({ path: "/login" });
       return;
     }
-    if (to.meta.requiredRole === "COACH" && role === "USER") {
+    if (role !== to.meta.requiredRole) {
       next({ path: "/" });
       return;
     }
