@@ -1,5 +1,11 @@
 const express = require('express')
 const cors = require('cors')
+const skill = require('./routes/skill')
+const users = require('./routes/users')
+const creditPackage = require('./routes/creditPackage')
+const adminCoaches = require('./routes/adminCoaches')
+const coaches = require('./routes/coaches')
+const courses = require('./routes/courses')
 
 const app = express()
 
@@ -10,6 +16,13 @@ app.use(express.json())
 app.get('/healthcheck', (req, res) => {
   res.status(200).send('OK')
 })
+
+app.use("/api/coaches/skill", skill);
+app.use("/api/users", users); 
+app.use("/api/credit-package", creditPackage); 
+app.use("/api/admin/coaches", adminCoaches); 
+app.use("/api/coaches", coaches); 
+app.use("/api/courses", courses); // M4-4  + M5-4 M5-5
 
 
 // 404（W3）
